@@ -1,114 +1,123 @@
-// AboutSection.jsx
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-const About = () => {
+const AboutSection = () => {
+  const [count, setCount] = useState(0);
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Counter animation effect
+  useEffect(() => {
+    if (isVisible && count < 25) {
+      const timer = setTimeout(() => {
+        setCount(count + 1);
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [count, isVisible]);
+
+  // Intersection Observer for animation trigger
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen py-16 bg-[#1c2636]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <div className="min-h-screen bg-[#1c2636] flex items-center justify-center">
+      <div className="max-w-8xl mx-auto px-20 ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
           {/* Image Section */}
-          <div className="relative group order-2 lg:order-1">
-            <div className="relative overflow-hidden p-6 pr-0">
-              {/* Background skewed shape */}
-              <div className="absolute top-0 -left-1/3 w-4/5 h-full bg-[#d4ad83] transform skew-x-12 z-0"></div>
+          <div
+            className={`relative h-full min-h-[400px] transition-all duration-1000 ${
+              isVisible
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 -translate-x-10"
+            }`}
+            ref={sectionRef}
+          >
+            <div className="about-img-container relative h-full">
+              {/* Background border effect */}
+              <div className="absolute top-[10%] left-[20%] w-[60%] h-[80%] border-5 border-[#d4ad83] -z-10"></div>
 
-              {/* Main image */}
+              {/* First image */}
               <img
-                src="/images/hero.jpg"
-                alt="About Propertywale"
-                className="relative w-full max-w-md lg:max-w-lg h-[400px] lg:h-[500px] object-cover rounded-lg shadow-2xl z-10 transition-transform duration-500 group-hover:scale-105"
+                className="absolute w-[60%] h-[80%] object-cover top-0 left-0 shadow-lg"
+                src="/images/about-1.jpg"
+                alt="Real estate project 1"
+              />
+
+              {/* Second image */}
+              <img
+                className="absolute w-[60%] h-[80%] object-cover shadow-lg"
+                style={{ marginTop: "20%", marginLeft: "40%" }}
+                src="/images/about-2.jpg"
+                alt="Real estate project 2"
               />
             </div>
           </div>
 
           {/* Content Section */}
-          <div className="space-y-8 order-1 lg:order-2">
-            <div className="space-y-4">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
-                Who We Are
-              </h1>
-
-              <p className="text-gray-300 text-base lg:text-lg leading-relaxed">
-                Under the leadership of{" "}
-                <span className="text-[#d4ad83] font-semibold">
-                  Mr. Aashish Kumar Chauhan
-                </span>{" "}
-                (Managing Director, CEO, and Chairman) and{" "}
-                <span className="text-[#d4ad83] font-semibold">
-                  Mrs. Dipti Chauhan
-                </span>{" "}
-                (Director and Vice Chairman), Propertywale has built a
-                diversified portfolio across multiple sectors.
-              </p>
+          <div
+            className={`flex flex-col justify-center transition-all duration-1000 delay-500 ${
+              isVisible
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 translate-x-10"
+            }`}
+          >
+            <div className="mb-4">
+              <span className="text-[#d4ad83] text-sm font-medium tracking-wider uppercase">
+                About Us
+              </span>
             </div>
 
-            {/* Our Complex Features */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold text-[#d4ad83] mb-4">
-                Our Complex Has:
-              </h3>
+            <h1 className="text-3xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+              Building Trust, One Property at a Time
+            </h1>
 
-              <div className="grid grid-cols-3 gap-3">
-                <div className="flex items-start space-x-2">
-                  <i className="ri-building-line text-[#d4ad83] text-lg flex-shrink-0 mt-1"></i>
-                  <span className="text-gray-200 text-sm">Commercial</span>
-                </div>
+            <p className="text-gray-300 mb-4 leading-relaxed">
+              For over two decades, we have been a trusted name in the real
+              estate industry, helping families find their dream homes and
+              investors grow their portfolios. Our commitment to transparency,
+              integrity, and personalized service has made us a leader in
+              residential and commercial property solutions.
+            </p>
 
-                <div className="flex items-start space-x-2">
-                  <i className="ri-home-4-line text-[#d4ad83] text-lg flex-shrink-0 mt-1"></i>
-                  <span className="text-gray-200 text-sm">Residential</span>
-                </div>
+            <p className="text-gray-300 mb-8 leading-relaxed">
+              Whether you're buying, selling, or investing, our team of seasoned
+              professionals provides expert guidance every step of the way. From
+              luxury estates to modern developments, we pride ourselves on
+              delivering properties that fit both lifestyle and financial goals.
+            </p>
 
-                <div className="flex items-start space-x-2">
-                  <i className="ri-hotel-line text-[#d4ad83] text-lg flex-shrink-0 mt-1"></i>
-                  <span className="text-gray-200 text-sm">Hospitality</span>
-                </div>
-
-                <div className="flex items-start space-x-2">
-                  <i className="ri-building-3-line text-[#d4ad83] text-lg flex-shrink-0 mt-1"></i>
-                  <span className="text-gray-200 text-sm">Industrial</span>
-                </div>
-
-                <div className="flex items-start space-x-2">
-                  <i className="ri-store-3-line text-[#d4ad83] text-lg flex-shrink-0 mt-1"></i>
-                  <span className="text-gray-200 text-sm">Warehousing</span>
-                </div>
-
-                <div className="flex items-start space-x-2">
-                  <i className="ri-customer-service-2-line text-[#d4ad83] text-lg flex-shrink-0 mt-1"></i>
-                  <span className="text-gray-200 text-sm">Services</span>
-                </div>
-
-                <div className="flex items-start space-x-2">
-                  <i className="ri-community-line text-[#d4ad83] text-lg flex-shrink-0 mt-1"></i>
-                  <span className="text-gray-200 text-sm">Co-living</span>
-                </div>
-
-                <div className="flex items-start space-x-2">
-                  <i className="ri-school-line text-[#d4ad83] text-lg flex-shrink-0 mt-1"></i>
-                  <span className="text-gray-200 text-sm">Education</span>
-                </div>
+            {/* Experience Counter */}
+            <div className="flex items-center mb-8">
+              <div className="flex-shrink-0 flex items-center justify-center border-4 border-[#d4ad83] w-28 h-28 lg:w-32 lg:h-32">
+                <span className="text-4xl lg:text-6xl font-bold text-white -mb-2">
+                  {count}
+                </span>
               </div>
-            </div>
-
-            {/* Location Coverage */}
-            <div className="space-y-4 pt-4">
-              <h3 className="text-xl font-bold text-[#d4ad83]">
-                Our Operations Span Across:
-              </h3>
-              <p className="text-gray-300 text-base lg:text-lg leading-relaxed">
-                Major Indian regions including{" "}
-                <span className="text-white font-medium">
-                  Haridwar, Dehradun
-                </span>
-                , other parts of{" "}
-                <span className="text-white font-medium">Uttarakhand</span>,
-                <span className="text-white font-medium">
-                  {" "}
-                  Saharanpur, Noida, NCR
-                </span>
-                , and beyond.
-              </p>
+              <div className="ml-6">
+                <h3 className="text-xl font-semibold text-white">Years</h3>
+                <h3 className="text-xl font-semibold text-white">Industry</h3>
+                <h3 className="text-xl font-semibold text-white mb-0">
+                  Experience
+                </h3>
+              </div>
             </div>
           </div>
         </div>
@@ -117,4 +126,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutSection;

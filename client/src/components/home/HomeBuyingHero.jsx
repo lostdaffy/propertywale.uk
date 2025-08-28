@@ -3,10 +3,10 @@ import React from "react";
 const HomeBuyingHero = () => {
   return (
     <div className="bg-[#1c2636]">
-      <div className="p-4 md:p-8 lg:p-20">
+      <div className="p-4 md:p-8 lg:p-10">
         <div className="relative">
           {/* Background Image Container with Rounded Corners */}
-          <div className="relative rounded-t-3xl rounded-b-3xl overflow-hidden h-[300px] md:h-[500px] lg:h-[500px]">
+          <div className="relative rounded-t-3xl rounded-b-3xl overflow-hidden h-[300px] md:h-[500px] lg:h-[450px]">
             {/* Background Image */}
             <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -20,7 +20,7 @@ const HomeBuyingHero = () => {
             
             {/* Content */}
             <div className="relative z-10 flex items-center justify-end h-full px-4 md:px-8 lg:px-16 xl:px-24">
-              <div className="max-w-sm md:max-w-md lg:max-w-lg text-right">
+              <div className="max-w-sm md:max-w-md lg:max-w-3xl text-right">
                 {/* Main Heading */}
                 <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-2 md:mb-3">
                   Find Your 
@@ -35,7 +35,7 @@ const HomeBuyingHero = () => {
                 </div>
 
                 {/* Subheading */}
-                <p className="text-base md:text-lg lg:text-xl text-gray-200 mb-6 md:mb-8 font-light leading-relaxed">
+                <p className="text-base md:text-lg lg:text-xl text-white mb-6 md:mb-8 font-light leading-relaxed">
                   Discover luxury homes crafted with excellence, designed for your perfect lifestyle
                 </p>
 

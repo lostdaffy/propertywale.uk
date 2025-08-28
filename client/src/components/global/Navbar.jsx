@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <nav className="shadow-lg sticky top-0 z-50 py-3 bg-[#1c2636]">
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-8xl mx-auto px-20">
         <div className="flex justify-between items-center h-16">
           {/* Left Navigation Links */}
           <div className="hidden md:flex items-center space-x-24 ">
