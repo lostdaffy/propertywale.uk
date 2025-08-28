@@ -145,7 +145,7 @@ const WhyChooseUs = () => {
               {/* First image */}
               <img
                 className="absolute w-[60%] h-[80%] object-cover top-0 left-0 shadow-lg"
-                src="/images/about-1.jpg"
+                src="/images/whychooseus-1.jpg"
                 alt="Luxury residential property"
               />
 
@@ -153,7 +153,7 @@ const WhyChooseUs = () => {
               <img
                 className="absolute w-[60%] h-[80%] object-cover shadow-lg"
                 style={{ marginTop: "20%", marginLeft: "40%" }}
-                src="/images/about-2.jpg"
+                src="/images/whychooseus-2.jpg"
                 alt="Modern commercial development"
               />
             </div>
