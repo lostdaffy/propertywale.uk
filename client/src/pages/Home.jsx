@@ -1,9 +1,9 @@
 import React from "react";
 import Hero from "../components/home/Hero";
-import About from "../components/home/About";
-import WhyChooseUs from "../components/home/WhyChooseUs";
 import RealEstateServices from "../components/home/RealEstateServices";
+import About from "../components/home/About";
 import Services from "../components/home/Services";
+import WhyChooseUs from "../components/home/WhyChooseUs";
 
 
 const Home = () => {
