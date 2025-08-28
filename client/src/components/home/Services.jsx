@@ -1,7 +1,8 @@
 import React, { useState, memo } from "react";
+import { motion } from "framer-motion";
 
 const ServiceCard = memo(({ service, index, isHovered, onHover, onLeave }) => (
-  <div
+  <motion.div
     className={`${service.bgColor} rounded-2xl p-8 h-96 flex flex-col justify-between transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer border border-[#d4ad83]/20 hover:border-[#d4ad83]/40 relative overflow-hidden`}
     role="button"
     tabIndex={0}
@@ -13,26 +14,31 @@ const ServiceCard = memo(({ service, index, isHovered, onHover, onLeave }) => (
       }
     }}
     aria-label={`Learn more about ${service.title} services`}
+    initial={{ opacity: 0, y: 50, scale: 0.95 }}
+    animate={{ opacity: 1, y: 0, scale: 1 }}
+    transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
+    whileHover={{ scale: 1.07 }}
+    whileTap={{ scale: 0.97 }}
   >
     {/* Background Image */}
-    <div
-      className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 transition-opacity duration-300"
+    <motion.div
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
       style={{ backgroundImage: `url(${service.backgroundImage})` }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 0.4 }}
+      transition={{ duration: 0.8 }}
     />
 
-    
     {/* Content - positioned relative to appear above background */}
     <div className="relative z-10 flex flex-col justify-between h-full">
       {/* Icon */}
-      <div
-        className={`${
-          service.iconColor
-        } mb-8 transform transition-transform duration-300 ${
-          isHovered ? "scale-110" : ""
-        }`}
+      <motion.div
+        className={`${service.iconColor} mb-8`}
+        animate={{ scale: isHovered ? 1.15 : 1, rotate: isHovered ? 5 : 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 15 }}
       >
         <i className={`${service.icon} text-6xl`}></i>
-      </div>
+      </motion.div>
 
       {/* Content */}
       <div>
@@ -42,7 +48,7 @@ const ServiceCard = memo(({ service, index, isHovered, onHover, onLeave }) => (
         </p>
       </div>
     </div>
-  </div>
+  </motion.div>
 ));
 
 const Services = () => {
@@ -84,18 +90,23 @@ const Services = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1c2636] py-20">
-      <div className="max-w-8xl mx-auto px-20">
+    <div className="min-h-screen bg-[#1c2636] pt-5 sm:pt-20">
+      <div className="max-w-8xl mx-auto px-6 md:px-20">
         {/* Header Section */}
-        <div className="mb-12 text-center sm:text-left">
+        <motion.div
+          className="mb-12 text-center sm:text-left"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
             Our Services
           </h1>
-          <p className="text-gray-300 text-lg max-w-2xl">
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto sm:mx-0">
             We create innovative real estate strategies to enable transformative
             growth and unlock property potential
           </p>
-        </div>
+        </motion.div>
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

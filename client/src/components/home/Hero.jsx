@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Search, MapPin, Building } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const HeroSection = () => {
+const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Sample carousel images
@@ -19,95 +20,270 @@ const HeroSection = () => {
     return () => clearInterval(timer);
   }, [carouselImages.length]);
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        duration: 0.6
+      }
+    }
+  };
+
+  const leftContentVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const rightContentVariants = {
+    hidden: { opacity: 0, x: 50, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const badgeVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const titleVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+        delay: 0.2
+      }
+    }
+  };
+
+  const descriptionVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+        delay: 0.4
+      }
+    }
+  };
+
+  const buttonVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+        delay: 0.6
+      }
+    }
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 1.1 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.7,
+        ease: "easeOut"
+      }
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.9,
+      transition: {
+        duration: 0.5,
+        ease: "easeIn"
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#1c2636] ">
+    <div className="min-h-screen bg-[#1c2636]">
       {/* Hero Content */}
       <div className="relative">
-        <div className="max-w-8xl mx-auto px-20 pt-10">
-          <div className="grid lg:grid-cols-2 items-center gap-8 lg:gap-12">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 lg:px-20 pt-6 sm:pt-8 md:pt-10">
+          <motion.div
+            className="grid lg:grid-cols-2 items-center gap-6 sm:gap-8 lg:gap-12"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {/* Left Content */}
-            <div className="space-y-8 lg:pr-8 order-2 lg:order-1">
-              <div className="space-y-8">
-                <div className="inline-flex items-center space-x-2 bg-[#d4ad83]/10 border border-[#d4ad83]/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                  <MapPin className="h-4 w-4 text-[#d4ad83]" />
+            <motion.div
+              className="space-y-6 lg:space-y-8 lg:pr-8 order-2 lg:order-1 text-center lg:text-left"
+              variants={leftContentVariants}
+            >
+              <div className="space-y-6 lg:space-y-8">
+                <motion.div
+                  className="inline-flex items-center space-x-2 bg-[#d4ad83]/10 border border-[#d4ad83]/20 px-4 py-2 rounded-full backdrop-blur-sm"
+                  variants={badgeVariants}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  >
+                    <MapPin className="h-4 w-4 text-[#d4ad83]" />
+                  </motion.div>
                   <span className="text-[#d4ad83] text-sm font-medium">
                     Find Your Dream Location
                   </span>
-                </div>
+                </motion.div>
 
-                <h1 className="uppercase text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-normal text-white">
-                  Building Wealth{"  "}
-                  <span className="text-[#d4ad83] relative">
+                <motion.h1
+                  className="uppercase text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight sm:leading-normal text-white"
+                  variants={titleVariants}
+                >
+                  Building Wealth{" "}
+                  <span className="text-[#d4ad83] relative block sm:inline">
                     Creating Elegance
-                    <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[#d4ad83] to-transparent rounded-full"></div>
+                    <motion.div
+                      className="absolute -bottom-1 lg:-bottom-2 left-0 w-full h-0.5 lg:h-1 bg-gradient-to-r from-[#d4ad83] to-transparent rounded-full"
+                      initial={{ scaleX: 0, originX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 1, delay: 1, ease: "easeOut" }}
+                    />
                   </span>
-                </h1>
+                </motion.h1>
 
-                <p className="text-base lg:text-lg text-gray-300 leading-relaxed max-w-xl">
+                <motion.p
+                  className="text-sm sm:text-base lg:text-lg text-gray-300 leading-relaxed max-w-xl mx-auto lg:mx-0"
+                  variants={descriptionVariants}
+                >
                   We offer premium real estate investments with world-class
                   amenities that enhance property value and maximize rental
                   income — creating spaces that inspire and returns that last.
-                </p>
+                </motion.p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-gradient-to-r from-[#d4ad83] to-[#c19a6b] text-white px-8 py-3 rounded-full hover:from-[#c19a6b] hover:to-[#b08954] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2 font-semibold">
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                variants={buttonVariants}
+              >
+                <motion.button
+                  className="bg-gradient-to-r from-[#d4ad83] to-[#c19a6b] text-white px-6 sm:px-8 py-3 rounded-full hover:from-[#c19a6b] hover:to-[#b08954] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2 font-semibold"
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 20px 25px -5px rgba(212, 173, 131, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8, duration: 0.5 }}
+                >
                   <Search className="h-5 w-5" />
                   <span>Explore Now</span>
-                </button>
+                </motion.button>
 
-                <button className="border-2 border-[#d4ad83] text-[#d4ad83] px-8 py-3 rounded-full hover:bg-[#d4ad83] hover:text-white transition-all duration-300 flex items-center justify-center space-x-2 font-semibold">
+                <motion.button
+                  className="border-2 border-[#d4ad83] text-[#d4ad83] px-6 sm:px-8 py-3 rounded-full hover:bg-[#d4ad83] hover:text-white transition-all duration-300 flex items-center justify-center space-x-2 font-semibold"
+                  whileHover={{ 
+                    scale: 1.05,
+                    backgroundColor: "#d4ad83",
+                    color: "#ffffff"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1, duration: 0.5 }}
+                >
                   <Building className="h-5 w-5" />
                   <span>View Properties</span>
-                </button>
-              </div>
-            </div>
+                </motion.button>
+              </motion.div>
+            </motion.div>
 
             {/* Right Content - Image Carousel */}
-            <div className="relative order-1 lg:order-2">
-              <div className="relative overflow-hidden ">
-                <div className="aspect-[4/3.5] relative">
-                  {carouselImages.map((image, index) => (
-                    <div
-                      key={index}
-                      className={`absolute inset-0 transition-opacity duration-700 ${
-                        index === currentSlide ? "opacity-100" : "opacity-0"
-                      }`}
+            <motion.div
+              className="relative order-1 lg:order-2"
+              variants={rightContentVariants}
+            >
+              <div className="relative overflow-hidden rounded-lg lg:rounded-none">
+                <div className="aspect-[4/3] lg:aspect-[4/3.5] relative">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentSlide}
+                      className="absolute inset-0"
+                      variants={imageVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
                     >
                       <img
-                        src={image}
-                        alt={`Property ${index + 1}`}
+                        src={carouselImages[currentSlide]}
+                        alt={`Property ${currentSlide + 1}`}
                         className="w-full h-full object-cover"
-                        loading={index === 0 ? "eager" : "lazy"}
+                        loading={currentSlide === 0 ? "eager" : "lazy"}
                       />
                       {/* Overlay gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                    </div>
-                  ))}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
 
                 {/* Slide Indicators */}
                 <div className="absolute bottom-4 lg:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
                   {carouselImages.map((_, index) => (
-                    <button
+                    <motion.button
                       key={index}
                       onClick={() => setCurrentSlide(index)}
-                      className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full transition-all duration-300 ${
+                      className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full transition-all duration-200 ${
                         index === currentSlide
                           ? "bg-[#d4ad83] scale-125"
                           : "bg-white/50 hover:bg-white/75"
                       }`}
                       aria-label={`Go to slide ${index + 1}`}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                      animate={index === currentSlide ? { scale: 1.25 } : { scale: 1 }}
+                      transition={{ duration: 0.3 }}
                     />
                   ))}
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </div>
   );
 };
 
-export default HeroSection;
+export default Hero;

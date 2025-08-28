@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const RealEstateServices = () => {
   const servicesData = {
@@ -65,30 +66,38 @@ const RealEstateServices = () => {
   };
 
   return (
-    <div className="pb-15 bg-[#1c2636]">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div className="py-10 sm:pb-12 md:pb-15 bg-[#1c2636]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {Object.values(servicesData).map((service, index) => (
-            <div
+            <motion.div
               key={index}
-              className="group relative bg-gradient-to-br from-[#1f2937] to-[#111827] text-center p-8 shadow-2xl hover:shadow-[#d4ad83]/20 transition-all duration-500 border border-[#d4ad83]/20 hover:border-[#d4ad83]/60 hover:-translate-y-2"
+              className="group relative bg-gradient-to-br from-[#1f2937] to-[#111827] text-center p-6 sm:p-8 shadow-2xl hover:shadow-[#d4ad83]/20 transition-all duration-500 border border-[#d4ad83]/20 hover:border-[#d4ad83]/60 hover:-translate-y-2 rounded-xl sm:rounded-2xl"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.6, 
+                delay: index * 0.1,
+                ease: "easeOut" 
+              }}
+              viewport={{ once: true, amount: 0.3 }}
             >
               {/* Card Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#d4ad83]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#d4ad83]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl sm:rounded-2xl"></div>
 
-              <div className="relative mb-6 flex justify-center">
-                <div className="w-18 h-18 bg-gradient-to-br from-[#d4ad83]/20 to-[#d4ad83]/5 rounded-2xl flex items-center justify-center border border-[#d4ad83]/30 group-hover:border-[#d4ad83] transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-[#d4ad83]/25">
+              <div className="relative mb-4 sm:mb-6 flex justify-center">
+                <div className="w-16 h-16 sm:w-18 sm:h-18 bg-gradient-to-br from-[#d4ad83]/20 to-[#d4ad83]/5 rounded-xl sm:rounded-2xl flex items-center justify-center border border-[#d4ad83]/30 group-hover:border-[#d4ad83] transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-[#d4ad83]/25">
                   {service.icon}
                 </div>
               </div>
 
-              <h3 className="text-xl font-bold mb-4 text-white group-hover:text-[#d4ad83] transition-colors duration-300">
+              <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-white group-hover:text-[#d4ad83] transition-colors duration-300">
                 {service.title}
               </h3>
-              <p className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
+              <p className="text-sm sm:text-base text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
                 {service.description}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
