@@ -24,11 +24,11 @@ const GetInTouch = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1c2636] py-20">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <div className="min-h-screen bg-[#1c2636] py-20 overflow-x-hidden"> {/* Added overflow-x-hidden */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 overflow-x-hidden"> {/* Added overflow-x-hidden */}
         {/* Header Section */}
         <motion.div
-          initial={{ opacity: 0, y: -40 }}
+          initial={{ opacity: 0, y: -40 }} // Original animation kept
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
@@ -44,14 +44,14 @@ const GetInTouch = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center overflow-x-hidden"> {/* Added overflow-x-hidden */}
           {/* Left Side */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -50 }} // Original animation kept
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="lg:col-span-1"
+            className="lg:col-span-1 overflow-x-hidden" // Added overflow-x-hidden
           >
             {/* Contact Info */}
             <div className="mb-8 bg-gradient-to-r from-[#2a3441] to-[#1e2832] rounded-xl p-6">
@@ -70,7 +70,7 @@ const GetInTouch = () => {
                   </div>
                   <a
                     href="mailto:info@propertywale.uk.com"
-                    className="text-white font-bold hover:text-[#d4ad83] transition-colors"
+                    className="text-white font-bold hover:text-[#d4ad83] transition-colors break-words" // Added break-words
                   >
                     info@propertywale.uk.com
                   </a>
@@ -100,11 +100,11 @@ const GetInTouch = () => {
 
           {/* Right Side - Form */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 50 }} // Original animation kept
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="lg:col-span-1"
+            className="lg:col-span-1 overflow-x-hidden" // Added overflow-x-hidden
           >
             <div className="bg-gradient-to-br from-[#2a3441] to-[#1e2832] rounded-2xl p-8 lg:p-12">
               <h2 className="text-2xl font-bold text-white mb-8">
@@ -184,8 +184,8 @@ const GetInTouch = () => {
                 <div className="pt-4">
                   <motion.button
                     type="submit"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.02 }} // Slightly reduced from 1.05 to prevent overflow
+                    whileTap={{ scale: 0.98 }} // Slightly reduced from 0.95 
                     className="w-full bg-[#d4ad83] hover:bg-[#c49a70] text-[#1c2636] font-bold py-4 px-8 rounded-lg transition-all duration-300"
                   >
                     Send Message

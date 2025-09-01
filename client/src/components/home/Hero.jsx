@@ -20,7 +20,7 @@ const Hero = () => {
     return () => clearInterval(timer);
   }, [carouselImages.length]);
 
-  // Animation variants
+  // Animation variants (Original values kept)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -33,7 +33,7 @@ const Hero = () => {
   };
 
   const leftContentVariants = {
-    hidden: { opacity: 0, x: -50 },
+    hidden: { opacity: 0, x: -50 }, // Original animation kept
     visible: {
       opacity: 1,
       x: 0,
@@ -45,7 +45,7 @@ const Hero = () => {
   };
 
   const rightContentVariants = {
-    hidden: { opacity: 0, x: 50, scale: 0.9 },
+    hidden: { opacity: 0, x: 50, scale: 0.9 }, // Original animation kept
     visible: {
       opacity: 1,
       x: 0,
@@ -129,27 +129,27 @@ const Hero = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1c2636]">
+    <div className="min-h-screen bg-[#1c2636] overflow-x-hidden"> {/* Added overflow-x-hidden */}
       {/* Hero Content */}
-      <div className="relative">
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 lg:px-20 pt-6 sm:pt-8 md:pt-10">
+      <div className="relative overflow-x-hidden"> {/* Added overflow-x-hidden */}
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 lg:px-20 pt-6 sm:pt-8 md:pt-10 overflow-x-hidden"> {/* Changed max-w-8xl to max-w-7xl, added overflow-x-hidden */}
           <motion.div
-            className="grid lg:grid-cols-2 items-center gap-6 sm:gap-8 lg:gap-12"
+            className="grid lg:grid-cols-2 items-center gap-6 sm:gap-8 lg:gap-12 overflow-x-hidden" // Added overflow-x-hidden
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
             {/* Left Content */}
             <motion.div
-              className="space-y-6 lg:space-y-8 lg:pr-8 order-2 lg:order-1 text-center lg:text-left"
+              className="space-y-6 lg:space-y-8 lg:pr-8 order-2 lg:order-1 text-center lg:text-left overflow-x-hidden" // Added overflow-x-hidden
               variants={leftContentVariants}
             >
               <div className="space-y-6 lg:space-y-8">
                 <motion.div
                   className="inline-flex items-center space-x-2 bg-[#d4ad83]/10 border border-[#d4ad83]/20 px-4 py-2 rounded-full backdrop-blur-sm"
                   variants={badgeVariants}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.03 }} // Reduced from 1.05 to 1.03
+                  whileTap={{ scale: 0.97 }} // Reduced from 0.95 to 0.97
                 >
                   <motion.div
                     animate={{ rotate: [0, 360] }}
@@ -193,9 +193,9 @@ const Hero = () => {
                 variants={buttonVariants}
               >
                 <motion.button
-                  className="bg-gradient-to-r from-[#d4ad83] to-[#c19a6b] text-white px-6 sm:px-8 py-3 rounded-full hover:from-[#c19a6b] hover:to-[#b08954] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2 font-semibold"
+                  className="bg-gradient-to-r from-[#d4ad83] to-[#c19a6b] text-white px-6 sm:px-8 py-3 rounded-full hover:from-[#c19a6b] hover:to-[#b08954] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 font-semibold"
                   whileHover={{ 
-                    scale: 1.05,
+                    scale: 1.03, // Reduced from 1.05 to 1.03
                     boxShadow: "0 20px 25px -5px rgba(212, 173, 131, 0.3)"
                   }}
                   whileTap={{ scale: 0.98 }}
@@ -210,7 +210,7 @@ const Hero = () => {
                 <motion.button
                   className="border-2 border-[#d4ad83] text-[#d4ad83] px-6 sm:px-8 py-3 rounded-full hover:bg-[#d4ad83] hover:text-white transition-all duration-300 flex items-center justify-center space-x-2 font-semibold"
                   whileHover={{ 
-                    scale: 1.05,
+                    scale: 1.03, // Reduced from 1.05 to 1.03
                     backgroundColor: "#d4ad83",
                     color: "#ffffff"
                   }}
@@ -227,7 +227,7 @@ const Hero = () => {
 
             {/* Right Content - Image Carousel */}
             <motion.div
-              className="relative order-1 lg:order-2"
+              className="relative order-1 lg:order-2 overflow-hidden" // Added overflow-hidden
               variants={rightContentVariants}
             >
               <div className="relative overflow-hidden rounded-lg lg:rounded-none">
@@ -270,9 +270,9 @@ const Hero = () => {
                           : "bg-white/50 hover:bg-white/75"
                       }`}
                       aria-label={`Go to slide ${index + 1}`}
-                      whileHover={{ scale: 1.2 }}
+                      whileHover={{ scale: 1.15 }} // Reduced from 1.2 to 1.15
                       whileTap={{ scale: 0.9 }}
-                      animate={index === currentSlide ? { scale: 1.25 } : { scale: 1 }}
+                      animate={index === currentSlide ? { scale: 1.2 } : { scale: 1 }} // Reduced from 1.25 to 1.2
                       transition={{ duration: 0.3 }}
                     />
                   ))}
