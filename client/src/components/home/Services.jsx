@@ -14,9 +14,17 @@ const ServiceCard = memo(({ service, index, isHovered, onHover, onLeave }) => (
       }
     }}
     aria-label={`Learn more about ${service.title} services`}
-    initial={{ opacity: 0, y: 50, scale: 0.95 }}
-    animate={{ opacity: 1, y: 0, scale: 1 }}
-    transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
+    
+    // Onscroll animations
+    initial={{ opacity: 0, y: 100, scale: 0.8 }}
+    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+    transition={{ 
+      delay: index * 0.2, 
+      duration: 0.8, 
+      ease: [0.25, 0.46, 0.45, 0.94]
+    }}
+    viewport={{ once: true, amount: 0.3 }}
+    
     whileHover={{ scale: 1.07 }}
     whileTap={{ scale: 0.97 }}
   >
@@ -24,9 +32,10 @@ const ServiceCard = memo(({ service, index, isHovered, onHover, onLeave }) => (
     <motion.div
       className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
       style={{ backgroundImage: `url(${service.backgroundImage})` }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 0.4 }}
-      transition={{ duration: 0.8 }}
+      initial={{ opacity: 0, scale: 1.2 }}
+      whileInView={{ opacity: 0.4, scale: 1 }}
+      transition={{ duration: 1.2, delay: index * 0.1 }}
+      viewport={{ once: true }}
     />
 
     {/* Content - positioned relative to appear above background */}
@@ -34,19 +43,55 @@ const ServiceCard = memo(({ service, index, isHovered, onHover, onLeave }) => (
       {/* Icon */}
       <motion.div
         className={`${service.iconColor} mb-8`}
+        initial={{ opacity: 0, scale: 0, rotate: -180 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ 
+          duration: 0.8, 
+          delay: 0.3 + index * 0.1,
+          type: "spring",
+          stiffness: 200
+        }}
+        viewport={{ once: true }}
         animate={{ scale: isHovered ? 1.15 : 1, rotate: isHovered ? 5 : 0 }}
-        transition={{ type: "spring", stiffness: 300, damping: 15 }}
       >
         <i className={`${service.icon} text-6xl`}></i>
       </motion.div>
 
       {/* Content */}
-      <div>
-        <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
-        <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 0.6, 
+          delay: 0.5 + index * 0.1 
+        }}
+        viewport={{ once: true }}
+      >
+        <motion.h3 
+          className="text-2xl font-bold text-white mb-4"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ 
+            duration: 0.6, 
+            delay: 0.6 + index * 0.1 
+          }}
+          viewport={{ once: true }}
+        >
+          {service.title}
+        </motion.h3>
+        <motion.p 
+          className="text-gray-300 leading-relaxed text-sm sm:text-base"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ 
+            duration: 0.6, 
+            delay: 0.7 + index * 0.1 
+          }}
+          viewport={{ once: true }}
+        >
           {service.description}
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     </div>
   </motion.div>
 ));
@@ -95,21 +140,44 @@ const Services = () => {
         {/* Header Section */}
         <motion.div
           className="mb-12 text-center sm:text-left"
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: -50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.3 }}
         >
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+          <motion.h1 
+            className="text-4xl sm:text-5xl font-bold text-white mb-4"
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
             Our Services
-          </h1>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto sm:mx-0">
+          </motion.h1>
+          <motion.p 
+            className="text-gray-300 text-lg max-w-2xl mx-auto sm:mx-0"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
             We create innovative real estate strategies to enable transformative
             growth and unlock property potential
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ 
+            duration: 0.6,
+            staggerChildren: 0.2,
+            delayChildren: 0.3
+          }}
+          viewport={{ once: true, amount: 0.1 }}
+        >
           {services.map((service, index) => (
             <ServiceCard
               key={index}
@@ -120,7 +188,7 @@ const Services = () => {
               onLeave={() => setHoveredService(null)}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

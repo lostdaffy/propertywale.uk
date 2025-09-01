@@ -8,19 +8,19 @@ import Gallery from "../components/home/Gallery";
 import Team from "../components/home/Team";
 import GetInTouch from "../components/global/GetInTouch";
 
-
 const Home = () => {
   return (
     <>
-      <Hero />
-      <RealEstateServices/>
-      <About />
-      <Services />
-      <WhyChooseUs />
-      <Gallery />
-      <Team />
-      <GetInTouch />
-
+      <div className="max-w-screen">
+        <Hero />
+        <RealEstateServices />
+        <About />
+        <Services />
+        <WhyChooseUs />
+        <Gallery />
+        <Team />
+        <GetInTouch />
+      </div>
     </>
   );
 };

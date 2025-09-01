@@ -1,69 +1,96 @@
-import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import React from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-const AboutSection = () => {
-  const [count, setCount] = useState(0);
-  const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+const About = () => {
+  const { scrollY } = useScroll();
+  // Reduced transform values to prevent overflow
+  const y = useTransform(scrollY, [0, 1000], [0, -30]);
 
-  // Counter animation effect
-  useEffect(() => {
-    if (isVisible && count < 25) {
-      const timer = setTimeout(() => {
-        setCount(count + 1);
-      }, 50);
-      return () => clearTimeout(timer);
-    }
-  }, [count, isVisible]);
-
-  // Intersection Observer for animation trigger
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+  // Animation variants with constrained transforms
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
       },
-      { threshold: 0.1 }
-    );
+    },
+  };
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+  const imageVariants = {
+    hidden: { 
+      opacity: 0, 
+      x: -50, 
+      scale: 0.95
+    },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      scale: 1,
+      transition: { 
+        duration: 0.8, 
+        ease: "easeOut" 
+      } 
+    },
+  };
 
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
+  const contentVariants = {
+    hidden: { 
+      opacity: 0, 
+      x: 50 
+    },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { 
+        duration: 0.8, 
+        ease: "easeOut" 
+      } 
+    },
+  };
+
+  const textItemVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 20
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.6, 
+        ease: "easeOut" 
+      } 
+    },
+  };
 
   return (
-    <div className="min-h-screen bg-[#1c2636] flex items-center justify-center py-10 sm:py-20">
-      <div className="max-w-8xl mx-auto px-4 sm:px-8 md:px-16 lg:px-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-16 lg:gap-20">
-          {/* Image Section */}
+    <div className="min-h-screen bg-[#1c2636] flex items-center justify-center pt-10 sm:pt-20 overflow-hidden">
+      <motion.div 
+        className="max-w-8xl mx-auto px-4 sm:px-8 md:px-16 lg:px-20 w-full"
+        style={{ y }}
+      >
+        <motion.div
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-16 lg:gap-20 items-center"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {/* Image Section - Simplified animations */}
           <motion.div
             className="relative h-full min-h-[300px] sm:min-h-[350px] md:min-h-[400px]"
-            ref={sectionRef}
-            initial={{ opacity: 0, x: -60 }}
-            animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -60 }}
-            transition={{ 
-              duration: 1.2, 
-              ease: [0.25, 0.1, 0.25, 1]
-            }}
+            variants={imageVariants}
           >
             <div className="about-img-container relative h-full">
-              {/* Background border effect */}
+              {/* Background border */}
               <motion.div 
                 className="absolute top-[10%] left-[20%] w-[60%] h-[80%] border-4 lg:border-5 border-[#d4ad83] -z-10"
-                initial={{ opacity: 0 }}
-                animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ 
-                  duration: 0.8, 
-                  delay: 0.3,
-                  ease: [0.25, 0.1, 0.25, 1]
-                }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
               />
 
               {/* First image */}
@@ -71,13 +98,11 @@ const AboutSection = () => {
                 className="absolute w-[60%] h-[80%] object-cover top-0 left-0 shadow-lg"
                 src="/images/about-1.jpg"
                 alt="Real estate project 1"
-                initial={{ opacity: 0 }}
-                animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ 
-                  duration: 1, 
-                  delay: 0.5,
-                  ease: [0.25, 0.1, 0.25, 1]
-                }}
+                initial={{ opacity: 0, scale: 1.1 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
               />
 
               {/* Second image */}
@@ -86,13 +111,11 @@ const AboutSection = () => {
                 style={{ marginTop: "20%", marginLeft: "40%" }}
                 src="/images/about-2.jpg"
                 alt="Real estate project 2"
-                initial={{ opacity: 0 }}
-                animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ 
-                  duration: 1, 
-                  delay: 0.7,
-                  ease: [0.25, 0.1, 0.25, 1]
-                }}
+                initial={{ opacity: 0, scale: 1.1 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
               />
             </div>
           </motion.div>
@@ -100,51 +123,30 @@ const AboutSection = () => {
           {/* Content Section */}
           <motion.div
             className="flex flex-col justify-center"
-            initial={{ opacity: 0, x: 60 }}
-            animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 60 }}
-            transition={{ 
-              duration: 1.2, 
-              delay: 0.3,
-              ease: [0.25, 0.1, 0.25, 1]
-            }}
+            variants={contentVariants}
           >
+            {/* About Us Label */}
             <motion.div 
               className="mb-3 sm:mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ 
-                duration: 0.8, 
-                delay: 0.6,
-                ease: [0.25, 0.1, 0.25, 1]
-              }}
+              variants={textItemVariants}
             >
               <span className="text-[#d4ad83] text-xs sm:text-sm font-medium tracking-wider uppercase">
                 About Us
               </span>
             </motion.div>
 
+            {/* Main Heading */}
             <motion.h1 
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ 
-                duration: 0.8, 
-                delay: 0.7,
-                ease: [0.25, 0.1, 0.25, 1]
-              }}
+              variants={textItemVariants}
             >
               Building Trust, One Property at a Time
             </motion.h1>
 
+            {/* First Paragraph */}
             <motion.p 
               className="text-gray-300 mb-3 sm:mb-4 leading-relaxed text-justify text-sm sm:text-base"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ 
-                duration: 0.8, 
-                delay: 0.8,
-                ease: [0.25, 0.1, 0.25, 1]
-              }}
+              variants={textItemVariants}
             >
               For over two decades, we have been a trusted name in the real
               estate industry, helping families find their dream homes and
@@ -153,15 +155,10 @@ const AboutSection = () => {
               residential and commercial property solutions.
             </motion.p>
 
+            {/* Second Paragraph */}
             <motion.p 
               className="text-gray-300 mb-6 sm:mb-8 leading-relaxed text-justify text-sm sm:text-base"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ 
-                duration: 0.8, 
-                delay: 0.9,
-                ease: [0.25, 0.1, 0.25, 1]
-              }}
+              variants={textItemVariants}
             >
               Whether you're buying, selling, or investing, our team of seasoned
               professionals provides expert guidance every step of the way. From
@@ -172,41 +169,62 @@ const AboutSection = () => {
             {/* Experience Counter */}
             <motion.div 
               className="flex items-center mb-6 sm:mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ 
-                duration: 0.8, 
-                delay: 1,
-                ease: [0.25, 0.1, 0.25, 1]
-              }}
+              variants={textItemVariants}
             >
-              <div className="flex-shrink-0 flex items-center justify-center border-3 sm:border-4 border-[#d4ad83] w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32">
+              <motion.div 
+                className="flex-shrink-0 flex items-center justify-center border-3 sm:border-4 border-[#d4ad83] w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32"
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05 }}
+              >
                 <motion.span 
                   className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white -mb-1 sm:-mb-2"
-                  key={count}
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ 
-                    duration: 0.3,
-                    ease: [0.25, 0.1, 0.25, 1]
-                  }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 1 }}
+                  viewport={{ once: true }}
                 >
-                  {count}
+                  25
                 </motion.span>
-              </div>
+              </motion.div>
+
               <div className="ml-4 sm:ml-6">
-                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white">Years</h3>
-                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white">Industry</h3>
-                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-0">
+                <motion.h3 
+                  className="text-base sm:text-lg md:text-xl font-semibold text-white"
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 1.1 }}
+                  viewport={{ once: true }}
+                >
+                  Years
+                </motion.h3>
+                <motion.h3 
+                  className="text-base sm:text-lg md:text-xl font-semibold text-white"
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 1.2 }}
+                  viewport={{ once: true }}
+                >
+                  Industry
+                </motion.h3>
+                <motion.h3 
+                  className="text-base sm:text-lg md:text-xl font-semibold text-white mb-0"
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 1.3 }}
+                  viewport={{ once: true }}
+                >
                   Experience
-                </h3>
+                </motion.h3>
               </div>
             </motion.div>
           </motion.div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
 
-export default AboutSection;
+export default About;
